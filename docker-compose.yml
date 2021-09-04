@@ -1,0 +1,22 @@
+version: "3"
+
+networks:
+  proxy:
+    external: true
+  internal:
+    external: false
+services:
+  petclinic-mvn-java-11:
+    image: mbachmannunited/petclinic-mvn-java-11
+
+    labels:
+      - "traefik.backend=petclinic-mvn-java-11"
+      - "traefik.frontend.rule=Host:petclinic-mvn-java-11.united-portal.com"
+      - "traefik.docker.network=proxy"
+      - "traefik.port=8080"
+      - "traefik.enable=true"
+    networks:
+      - internal
+      - proxy
+    ports:
+      - "8080"
